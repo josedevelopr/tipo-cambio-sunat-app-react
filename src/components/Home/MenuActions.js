@@ -27,7 +27,7 @@ const options = ['Acciones', 'Tipo de Cambio por mes', 'Calcular'];
 export default function MenuActions() {
   const [open, setOpen] = React.useState(false);
   const anchorRef = React.useRef(null);
-  const [selectedIndex, setSelectedIndex] = React.useState(1);
+  const [selectedIndex, setSelectedIndex] = React.useState(0);
 
   const handleClick = () => {
     console.info(`You clicked ${options[selectedIndex]}`);
@@ -85,8 +85,9 @@ export default function MenuActions() {
                         {options.map((option, index) => (
                         <MenuItem
                             key={option}
-                            // disabled={index === 2}
-                            selected={index === selectedIndex}
+                            disabled={index === 0}
+                            // selected={index === selectedIndex}
+                            selected={index === 0}
                             onClick={(event) => handleMenuItemClick(event, index)}
                         >
                             {option}

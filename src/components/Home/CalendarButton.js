@@ -1,7 +1,9 @@
-import React from 'react';
+import React,{useState} from 'react';
 import Fab from '@material-ui/core/Fab';
 import TodayIcon from '@material-ui/icons/Today';
 import { createMuiTheme, makeStyles, ThemeProvider } from '@material-ui/core/styles';
+import { MuiPickersUtilsProvider, DatePicker } from "@material-ui/pickers";
+import DateFnsUtils from '@date-io/date-fns';
 
 const useStyles = makeStyles((theme) => ({
   margin: {
@@ -25,19 +27,30 @@ const theme = createMuiTheme({
 
 export default function CalendarButton() {
     const classes = useStyles();
+    const [open, setOpen] = useState(false);
+    const [selectedDate, handleDateChange] = useState(new Date());
 
     return (
+      <MuiPickersUtilsProvider utils={DateFnsUtils}>
         <ThemeProvider theme={theme}>
             <Fab 
             size="large" 
             color="primary"
             aria-label="add"
             className={classes.margin}         
+            onClick={() => setOpen(isOpen => !isOpen)}
             >
             <TodayIcon             
                 style={{color:'#fff'}}
                 />
             </Fab>             
         </ThemeProvider>           
+        <DatePicker 
+          open={open} 
+          style={{display:"none"}} 
+          onChange={handleDateChange} 
+          onAccept={() => setOpen(isOpen => !isOpen)}
+        />
+      </MuiPickersUtilsProvider>        
     )
 }
