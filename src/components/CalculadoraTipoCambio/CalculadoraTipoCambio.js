@@ -18,7 +18,7 @@ class CalculadoraTipoCambio extends Component {
             <CalculadoraTipoCambioContainer>
                 <div className="currency">
                     <div className="title">
-                        <h1><strong>Calcular</strong></h1> 
+                        <h1><strong>Tipo Cambio</strong></h1> 
                     </div>
                     <div className="currency-exchange">
                         <p>Fecha : 02/05/2020</p>
@@ -29,8 +29,11 @@ class CalculadoraTipoCambio extends Component {
                         <CalendarButton/>
                     </div>
                 </div>
-                <div className="calculate-section">                    
-                    <FormControl variant="outlined" className="item-calc">
+                <div className="calculate-section">  
+                    <div className="title">
+                        <h1><strong>Calcular</strong></h1> 
+                    </div>                  
+                    <FormControl fullWidth variant="outlined" className="item-calc">
                         <InputLabel htmlFor="outlined-adornment-amount">Amount</InputLabel>
                         <OutlinedInput
                             id="outlined-adornment-amount"                            
@@ -40,11 +43,11 @@ class CalculadoraTipoCambio extends Component {
                         />
                     </FormControl>
                     
-                    <Fab color="primary" className="item-calc">
+                    <Fab color="primary" className="btnCenter">
                         <ArrowDownwardIcon />
                     </Fab>
                     
-                    <FormControl variant="outlined" className="item-calc">
+                    <FormControl fullWidth variant="outlined" className="item-calc">
                         <InputLabel htmlFor="outlined-adornment-amount">Amount</InputLabel>
                         <OutlinedInput
                             id="outlined-adornment-amount"                            
@@ -54,7 +57,7 @@ class CalculadoraTipoCambio extends Component {
                         />
                     </FormControl>
                 </div>      
-                <Fab color="secondary" className="item-calc">
+                <Fab color="secondary" className="btnCenter">
                     <DragHandleIcon />
                 </Fab>          
             </CalculadoraTipoCambioContainer>
@@ -65,16 +68,17 @@ class CalculadoraTipoCambio extends Component {
 export default CalculadoraTipoCambio;
 
 const CalculadoraTipoCambioContainer = styled.div`
-    width : 100vw;
-    height : 750px;
+    width : 100%;
+    height : 100%;
     background-color : var(--main-background);    
-    padding-top: 5vh;    
+    padding-top: 5%;    
     display: flex;
     flex-direction: column;
+    padding-bottom: 10%;  
     .currency{
         box-sizing: border-box; 
-        width : 90vw;
-        height : 44vh;
+        width : 90%;
+        height : 350px;
         border-radius: 9px; 
         background-color : var(--secondary-background); 
         -webkit-box-shadow: 1px 20px 26px -1px rgba(0,0,0,0.51);
@@ -84,9 +88,9 @@ const CalculadoraTipoCambioContainer = styled.div`
     }
 
     .title{
-        width : 90vw;
-        height : 15vh;
-        //background-color : red;
+        width : 100%;
+        height : 40%;
+        //background-color : pink;
         padding: 25px;
         box-sizing: border-box;        
     }
@@ -99,8 +103,8 @@ const CalculadoraTipoCambioContainer = styled.div`
     }
 
     .currency-exchange{
-        width: 90vw;
-        height: 17vh;
+        width: 100%;
+        height: 35%;
         padding: 25px;
         box-sizing: border-box;
         //background-color : red;   
@@ -112,32 +116,38 @@ const CalculadoraTipoCambioContainer = styled.div`
 
     .button-section{
         box-sizing: border-box;
-        width: 90vw;
-        height: 10vh;
+        width: 100%;
+        height: 20%;
         //background-color : green;
         display: flex;    
         justify-content: flex-end;
-        padding-right: 15px;   
+        padding-right: 5%;   
     }
 
     .calculate-section{
         box-sizing: border-box; 
-        width : 90vw;
-        height : 47vh;
+        width : 90%;
+        height : auto;
         border-radius: 9px; 
         background-color : var(--secondary-background); 
         -webkit-box-shadow: 1px 20px 26px -1px rgba(0,0,0,0.51);
         -moz-box-shadow: 1px 20px 26px -1px rgba(0,0,0,0.51);
         box-shadow: 1px 20px 26px -1px rgba(0,0,0,0.51); 
         margin: 0 auto;
-        margin-top: 40px;
-        //padding:8%;
+        margin-top: 10%;        
         display: flex;
-        flex-direction: column;
+        flex-direction: column;      
+        padding-bottom: 15%;  
     }
 
-    .item-calc{
+    .item-calc{     
         align-self: center;
         margin-top: 2rem;
+        width: 90%;
+    }
+    
+    .btnCenter{
+        margin-top: 1rem;
+        align-self: center;
     }
 `;
