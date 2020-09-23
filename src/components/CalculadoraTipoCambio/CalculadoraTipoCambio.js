@@ -56,10 +56,10 @@ class CalculadoraTipoCambio extends Component {
                             labelWidth={60}
                         />
                     </FormControl>
+                </div>                          
+                <div className="btnCalculate">
+                    <DragHandleIcon style={{fill: "white"}}/>
                 </div>      
-                <Fab color="secondary" className="btnCenter">
-                    <DragHandleIcon />
-                </Fab>          
             </CalculadoraTipoCambioContainer>
         )
     }
@@ -74,7 +74,7 @@ const CalculadoraTipoCambioContainer = styled.div`
     padding-top: 5%;    
     display: flex;
     flex-direction: column;
-    padding-bottom: 10%;  
+    //padding-bottom: 10%;  
     .currency{
         box-sizing: border-box; 
         width : 90%;
@@ -149,5 +149,15 @@ const CalculadoraTipoCambioContainer = styled.div`
     .btnCenter{
         margin-top: 1rem;
         align-self: center;
+    }
+
+    .btnCalculate{
+        width: 100%;
+        height: 70px;
+        background-color: #f50057;
+        display: flex;
+        align-items: center;
+        justify-content: center;   
+        margin-top:10%;
     }
 `;
