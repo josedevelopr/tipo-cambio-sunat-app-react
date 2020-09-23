@@ -1,12 +1,16 @@
 import React from 'react';
+import {BrowserRouter as Router, Route} from 'react-router-dom';
+
 import './App.css';
 import CalendarButton from './components/Home/CalendarButton';
-
 import Home from './components/Home/Home';
 
 function App() {
   return (
-    <Home />  
+    <Router>
+      <Route exact path="/" component={Home} />
+    </Router>
+      
   );
 }
 

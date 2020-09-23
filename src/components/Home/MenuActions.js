@@ -9,6 +9,7 @@ import Paper from '@material-ui/core/Paper';
 import Popper from '@material-ui/core/Popper';
 import MenuItem from '@material-ui/core/MenuItem';
 import MenuList from '@material-ui/core/MenuList';
+import {Link} from "react-router-dom";
 import { createMuiTheme, makeStyles, ThemeProvider } from '@material-ui/core/styles';
 
 const theme = createMuiTheme({
@@ -22,7 +23,7 @@ const theme = createMuiTheme({
     },
   });
 
-const options = ['Acciones', 'Tipo de Cambio por mes', 'Calcular'];
+const options = [{'name' : 'Acciones','link':'none'}, {'name' :'Tipo de Cambio por mes', 'link' : '/tipo-cambio-por-mes'}, {'name' :'Calcular', 'link' : '/calculo-tipo-cambio'}];
 
 export default function MenuActions() {
   const [open, setOpen] = React.useState(false);
@@ -56,8 +57,9 @@ export default function MenuActions() {
         <ThemeProvider theme={theme}>
             <ButtonGroup variant="contained" color="primary" ref={anchorRef} aria-label="split button">
                 <Button 
-                onClick={handleClick}>
-                        {options[selectedIndex]}
+                  size="large"
+                  onClick={handleClick}>
+                        {options[selectedIndex].name.toString()}                        
                 </Button>
                 <Button
                     color="primary"
@@ -84,13 +86,15 @@ export default function MenuActions() {
                     <MenuList id="split-button-menu">
                         {options.map((option, index) => (
                         <MenuItem
-                            key={option}
+                            key={index}
                             disabled={index === 0}
                             // selected={index === selectedIndex}
                             selected={index === 0}
                             onClick={(event) => handleMenuItemClick(event, index)}
+                            component={Link}
+                            to={option.name.toString()}
                         >
-                            {option}
+                            {option.name.toString()}
                         </MenuItem>
                         ))}
                     </MenuList>
