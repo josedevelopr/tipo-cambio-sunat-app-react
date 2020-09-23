@@ -34,7 +34,7 @@ export default Home;
 const HomeContainer = styled.div`
     width : 100vw;
     height : 100vh;
-    background-color : #ffab8f;
+    background-color : var(--main-background);
     color : #020826;
     display: flex;
     align-items: center;
@@ -43,7 +43,7 @@ const HomeContainer = styled.div`
     .display-section {
         width : 90vw;
         height : 90vh;
-        background-color : #2b3166;      
+        background-color : var(--secondary-background);      
         border-radius: 9px;  
         -webkit-box-shadow: 1px 20px 26px -1px rgba(0,0,0,0.51);
         -moz-box-shadow: 1px 20px 26px -1px rgba(0,0,0,0.51);

@@ -92,7 +92,7 @@ export default function MenuActions() {
                             selected={index === 0}
                             onClick={(event) => handleMenuItemClick(event, index)}
                             component={Link}
-                            to={option.name.toString()}
+                            to={option.link.toString()}
                         >
                             {option.name.toString()}
                         </MenuItem>
