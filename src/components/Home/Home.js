@@ -3,9 +3,20 @@ import styled from 'styled-components';
 import {generateMedia} from 'styled-media-query';
 import CalendarButton from './CalendarButton';
 import MenuActions from './MenuActions';
+import {connect} from 'react-redux';
+import PropTypes from 'prop-types';
+
+import {getCurrentExchangeRate} from '../../actions/ExchangeRateActions';
 
 class Home extends Component {
+
+    componentDidMount(){        
+        this.props.getCurrentExchangeRate();
+    }
+
     render() {
+
+        const {exchange_rate} = this.props.exchangeRate
 
         return (
             <HomeContainer>
@@ -15,7 +26,7 @@ class Home extends Component {
                         <CalendarButton className="btnCalendar"/>                      
                     </div>                                       
                     <div className="display-value">
-                        <strong>3.546</strong>                                                                        
+                        <strong>{exchange_rate.precioVenta}</strong>                                                                        
                     </div>
                     <div className="currency">
                         <p>nuevos soles</p>
@@ -29,7 +40,16 @@ class Home extends Component {
     }
 }
 
-export default Home;
+Home.propTypes = {
+    getCurrentExchangeRate : PropTypes.func.isRequired,
+    exchangeRate : PropTypes.object.isRequired
+}
+
+const mapStateToProps = state => ({
+    exchangeRate : state.exchangeRate
+})
+
+export default connect(mapStateToProps, {getCurrentExchangeRate}) (Home);
 
 const HomeContainer = styled.div`
     width : 100vw;
