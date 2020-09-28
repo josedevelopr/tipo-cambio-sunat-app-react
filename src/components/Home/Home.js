@@ -7,6 +7,7 @@ import {connect} from 'react-redux';
 import PropTypes from 'prop-types';
 
 import {getCurrentExchangeRate,getExchangeRateByDate} from '../../actions/ExchangeRateActions';
+import TipoCambio from './TipoCambio';
 
 class Home extends Component {
 
@@ -25,7 +26,7 @@ class Home extends Component {
 
     onChangeDate(d){
         this.setState({date:d});
-        console.log(d);
+        // console.log(d);
         this.props.getExchangeRateByDate(d.getDate(), d.getMonth()+1, d.getFullYear());
     }
 
@@ -43,13 +44,23 @@ class Home extends Component {
                          date={this.state.date}
                          onChangeDate={this.onChangeDate}
                         />                      
-                    </div>                                       
+                    </div>
+                    
+                    {/* <div className="container-tipo-cambio">                        
+                        <TipoCambio/>
+                    </div> */}
+
+                    <p className="t1">Precio Venta :</p>                                            
                     <div className="display-value">
-                        <strong>{exchange_rate.precioVenta}</strong>                                                                        
+                        <strong>S/.{exchange_rate.precioVenta}</strong>                                                                        
                     </div>
-                    <div className="currency">
+                    <p className="t1">Precio Compra :</p>                                            
+                    <div className="display-value">
+                        <strong>S/.{exchange_rate.precioCompra}</strong>                                                                        
+                    </div>                   
+                    {/* <div className="currency">
                         <p>nuevos soles</p>
-                    </div>
+                    </div> */}
                     <div className="action-buttons">
                         <MenuActions/>
                     </div>
@@ -80,6 +91,11 @@ const HomeContainer = styled.div`
     align-items: center;
     justify-content: center;
     
+    .container-tipo-cambio{
+        text-align:center;
+        width: 95%;
+    }
+
     .display-section {
         width : 90vw;
         height : 90vh;
@@ -103,9 +119,15 @@ const HomeContainer = styled.div`
         margin-bottom: 15px;
     }
 
+    .t1{
+        text-align: center;
+        color: #fff;
+        padding-top:40px;
+    }
+
     .display-value{
         width: 100%;
-        height: 30vh;
+        height: 10vh;
         //background-color: red;        
         display: flex;
         align-items: center;
@@ -116,7 +138,7 @@ const HomeContainer = styled.div`
     }
 
     .display-value strong{
-        font-size : 5rem;
+        font-size : 1.5rem;
     }
 
     .currency{

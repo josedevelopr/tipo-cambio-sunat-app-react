@@ -48,7 +48,10 @@ function CalendarButton(props) {
         <DatePicker 
           open={open} 
           style={{display:"none"}}  
-          onChange={ d => props.onChangeDate(d)} 
+          onChange={ d => {
+            props.onChangeDate(d);
+            setOpen(isOpen => !isOpen);
+          }} 
           onAccept={() => setOpen(isOpen => !isOpen)}          
           views={["year", "month", "date"]}
           value={props.date}
