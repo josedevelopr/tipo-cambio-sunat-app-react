@@ -5,6 +5,7 @@ import { createMuiTheme, makeStyles, ThemeProvider } from '@material-ui/core/sty
 import { MuiPickersUtilsProvider, DatePicker } from "@material-ui/pickers";
 import DateFnsUtils from '@date-io/date-fns';
 
+
 const useStyles = makeStyles((theme) => ({
   margin: {
     margin: theme.spacing(1),
@@ -25,20 +26,19 @@ const theme = createMuiTheme({
     },
   });
 
-export default function CalendarButton() {
+function CalendarButton(props) {
     const classes = useStyles();
-    const [open, setOpen] = useState(false);
-    const [selectedDate, handleDateChange] = useState(new Date());
+    const [open, setOpen] = useState(false);    
 
     return (
       <MuiPickersUtilsProvider utils={DateFnsUtils}>
         <ThemeProvider theme={theme}>
             <Fab 
-            size="large" 
-            color="primary"
-            aria-label="add"
-            className={classes.margin}         
-            onClick={() => setOpen(isOpen => !isOpen)}
+              size="large" 
+              color="primary"
+              aria-label="add"
+              className={classes.margin}         
+              onClick={() => setOpen(isOpen => !isOpen)}
             >
             <TodayIcon             
                 style={{color:'#fff'}}
@@ -47,10 +47,16 @@ export default function CalendarButton() {
         </ThemeProvider>           
         <DatePicker 
           open={open} 
-          style={{display:"none"}} 
-          onChange={handleDateChange} 
-          onAccept={() => setOpen(isOpen => !isOpen)}
-        />
+          style={{display:"none"}}  
+          onChange={ d => props.onChangeDate(d)} 
+          onAccept={() => setOpen(isOpen => !isOpen)}          
+          views={["year", "month", "date"]}
+          value={props.date}
+          maxDate={new Date()}
+          onClose={() => setOpen(isOpen => !isOpen)}
+        />        
       </MuiPickersUtilsProvider>        
     )
 }
+
+export default CalendarButton;

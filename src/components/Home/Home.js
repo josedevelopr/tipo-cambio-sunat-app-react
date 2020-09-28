@@ -6,12 +6,27 @@ import MenuActions from './MenuActions';
 import {connect} from 'react-redux';
 import PropTypes from 'prop-types';
 
-import {getCurrentExchangeRate} from '../../actions/ExchangeRateActions';
+import {getCurrentExchangeRate,getExchangeRateByDate} from '../../actions/ExchangeRateActions';
 
 class Home extends Component {
 
+    constructor(props)
+    {   super();
+        this.state = {
+            date : new Date()
+        };
+
+        this.onChangeDate = this.onChangeDate.bind(this);
+    }
+
     componentDidMount(){        
         this.props.getCurrentExchangeRate();
+    }
+
+    onChangeDate(d){
+        this.setState({date:d});
+        console.log(d);
+        this.props.getExchangeRateByDate(d.getDate(), d.getMonth()+1, d.getFullYear());
     }
 
     render() {
@@ -23,7 +38,11 @@ class Home extends Component {
                 <div className="display-section">
                     <div className="title">
                         <h1>Dolar Hoy </h1>                          
-                        <CalendarButton className="btnCalendar"/>                      
+                        <CalendarButton 
+                         className="btnCalendar"
+                         date={this.state.date}
+                         onChangeDate={this.onChangeDate}
+                        />                      
                     </div>                                       
                     <div className="display-value">
                         <strong>{exchange_rate.precioVenta}</strong>                                                                        
@@ -42,6 +61,7 @@ class Home extends Component {
 
 Home.propTypes = {
     getCurrentExchangeRate : PropTypes.func.isRequired,
+    getExchangeRateByDate : PropTypes.func.isRequired,    
     exchangeRate : PropTypes.object.isRequired
 }
 
@@ -49,7 +69,7 @@ const mapStateToProps = state => ({
     exchangeRate : state.exchangeRate
 })
 
-export default connect(mapStateToProps, {getCurrentExchangeRate}) (Home);
+export default connect(mapStateToProps, {getCurrentExchangeRate,getExchangeRateByDate}) (Home);
 
 const HomeContainer = styled.div`
     width : 100vw;

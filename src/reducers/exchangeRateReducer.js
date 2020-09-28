@@ -1,4 +1,4 @@
-import {GET_CURRENT_EXCHANGE_RATE} from "../actions/types";
+import {GET_CURRENT_EXCHANGE_RATE, GET_EXCHANGE_RATE_BY_DATE} from "../actions/types";
 
 const initialState = {
     exchange_rates : [],
@@ -8,6 +8,12 @@ const initialState = {
 export default function(state = initialState, action){
     switch(action.type){
         case GET_CURRENT_EXCHANGE_RATE :
+            return {
+                ...state,
+                exchange_rate : action.payload
+            }
+        break;
+        case GET_EXCHANGE_RATE_BY_DATE :
             return {
                 ...state,
                 exchange_rate : action.payload
