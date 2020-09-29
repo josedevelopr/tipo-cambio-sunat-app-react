@@ -22,18 +22,22 @@ class TipoCambioMensual extends Component {
     componentDidMount()
     {
         const currentDate = new Date();
-        this.props.getExchangeRateByMonth(currentDate.getMonth(), currentDate.getFullYear());
+        this.props.getExchangeRateByMonth(currentDate.getMonth()+1, currentDate.getFullYear());
     }
 
     onChangeMonth(date)
     {
-        this.state({dateToConsult : date});
-        console.log(date);        
+        this.setState({dateToConsult : date});
+        this.props.getExchangeRateByMonth(date.getMonth()+1, date.getFullYear());
     }
 
     render() {
 
-        const {exchange_rates} = this.props.exchangeRate;        
+        const {exchange_rates} = this.props.exchangeRate;  
+        const monthsList       = ["Enero","Febrero","Marzo",
+                                  "Abril","Mayo","Junio",
+                                  "Julio","Agosto","Setiembre",
+                                  "Octubre","Noviembre","Diciembre"];
 
         return (
             <TipoCambioMensualContainer>
@@ -41,12 +45,12 @@ class TipoCambioMensual extends Component {
                     <h1><strong>Tipo Cambio Mensual</strong></h1> 
                 </div>
                 <div className="monthname">
-                    <h1>SETIEMBRE</h1>                    
-                    <h1>2020</h1>
+                    <h1>{monthsList[this.state.dateToConsult.getMonth()].toUpperCase()}</h1>                    
+                    <h1>{this.state.dateToConsult.getFullYear()}</h1>
                 </div>
                 <div className="button-section">
                     <SeleccionarMesButton
-                     onChangeDate={this.onChangeMonth}
+                     onChangeMonth={this.onChangeMonth}
                      date={this.state.dateToConsult}
                     />
                 </div>

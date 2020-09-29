@@ -28,8 +28,7 @@ const theme = createMuiTheme({
 
 export default function SeleccionarMesButton(props) {
     const classes = useStyles();
-    const [open, setOpen] = useState(false);
-    const [selectedDate, handleDateChange] = useState(new Date());
+    const [open, setOpen] = useState(false);    
 
     return (
       <MuiPickersUtilsProvider utils={DateFnsUtils}>

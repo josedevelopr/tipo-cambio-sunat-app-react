@@ -3,7 +3,7 @@ import {GET_ERRORS,
         GET_CURRENT_EXCHANGE_RATE, 
         GET_EXCHANGE_RATE_BY_DATE, 
         GET_EXCHANGE_RATE_BY_MONTH} from "./types";
-import add from 'date-fns/add';
+
 
 export const getCurrentExchangeRate = () => async dispatch => {    
     let consultDate = new Date();    
