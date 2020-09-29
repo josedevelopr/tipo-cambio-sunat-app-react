@@ -28,7 +28,7 @@ class CalculadoraTipoCambio extends Component {
             nuevosSoles : '',
             dolares : '',
             calculo : 'S',
-            errorAlertOpen : false
+            errores : ''
         };
 
         this.onChangeDate           = this.onChangeDate.bind(this);
@@ -70,15 +70,35 @@ class CalculadoraTipoCambio extends Component {
         let resultado = 0;
         switch(calculateType)
         {            
-            case "D" :  
+            case "D" :                  
                 let nuevosSoles = this.state.nuevosSoles;                
-                resultado = nuevosSoles / precioVenta;
-                this.setState({dolares : resultado});              
+                if(nuevosSoles == '')
+                {
+                    this.setState({errores : {
+                        titulo : 'Campo vacío',
+                        mensaje : 'El campo "Dólares" no debe estar vacío.'
+                    }});    
+                } else 
+                {
+                    resultado = nuevosSoles / precioVenta;
+                    this.setState({dolares : resultado});              
+                    this.setState({errores : ''});    
+                }                
                 break;
             default :
                 let dolares = this.state.dolares;                
-                resultado = dolares * precioVenta;
-                this.setState({nuevosSoles : resultado});
+                if(dolares == '')
+                {
+                    this.setState({errores : {
+                        titulo : 'Campo vacío',
+                        mensaje : 'El campo "Soles" no debe estar vacío.'
+                    }});    
+                } else 
+                {
+                    resultado = dolares * precioVenta;
+                    this.setState({nuevosSoles : resultado});
+                    this.setState({errores : ''});    
+                }                
         }
     }
 
@@ -89,7 +109,7 @@ class CalculadoraTipoCambio extends Component {
     render() {
         const {exchange_rate} = this.props.exchangeRate
         let fecha = format(this.state.date,'dd/MM/yyyy');        
-
+        
         return (
             <CalculadoraTipoCambioContainer>
                 <div className="currency">
@@ -152,8 +172,20 @@ class CalculadoraTipoCambio extends Component {
                             disabled={this.state.calculo == 'S' ? true : false}
                         />
                     </FormControl>
-                </div>                      
-                                       
+                </div>  
+                {
+                    this.state.errores != '' &&
+                    (
+                        <React.Fragment>
+                            <Alert 
+                            severity="error"                  
+                            >
+                                <AlertTitle>{this.state.errores.titulo}</AlertTitle>
+                                {this.state.errores.mensaje}
+                            </Alert>   
+                        </React.Fragment>                    
+                    )
+                }             
                 <div className="btnCalculate" onClick={this.onCalculate}>
                     <DragHandleIcon style={{fill: "white"}}/>
                 </div>  
