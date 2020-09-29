@@ -1,10 +1,28 @@
 import React, { Component } from 'react'
 import styled from 'styled-components';
 import {generateMedia} from 'styled-media-query';
+import {connect} from 'react-redux';
+import PropTypes from 'prop-types';
+
 import SeleccionarMesButton from './SeleccionarMesButton';
 import TipoCambioTable from './TipoCambioTable';
 
 class TipoCambioMensual extends Component {
+
+    constructor(props)
+    {   super();
+        this.state = {
+            dateToConsult : new Date()
+        };
+
+        this.onChangeMonth = this.onChangeMonth.bind(this);
+    }
+
+    onChangeMonth(date){
+        this.state({dateToConsult : date});
+        console.log(date);        
+    }
+
     render() {
         return (
             <TipoCambioMensualContainer>
@@ -16,7 +34,10 @@ class TipoCambioMensual extends Component {
                     <h1>2020</h1>
                 </div>
                 <div className="button-section">
-                    <SeleccionarMesButton/>
+                    <SeleccionarMesButton
+                     onChangeDate={this.onChangeMonth}
+                     date={this.state.dateToConsult}
+                    />
                 </div>
                 <div className="tipoCambioTableSection">
                     <TipoCambioTable/>
@@ -27,7 +48,7 @@ class TipoCambioMensual extends Component {
     }
 }
 
-export default TipoCambioMensual;
+export default connect(null, null) (TipoCambioMensual);
 
 const TipoCambioMensualContainer = styled.div`
     width : 100%;

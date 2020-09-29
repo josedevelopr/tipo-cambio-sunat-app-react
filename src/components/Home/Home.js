@@ -1,13 +1,12 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
 import {generateMedia} from 'styled-media-query';
-import CalendarButton from './CalendarButton';
-import MenuActions from './MenuActions';
 import {connect} from 'react-redux';
 import PropTypes from 'prop-types';
 
+import CalendarButton from './CalendarButton';
+import MenuActions from './MenuActions';
 import {getCurrentExchangeRate,getExchangeRateByDate} from '../../actions/ExchangeRateActions';
-import TipoCambio from './TipoCambio';
 
 class Home extends Component {
 
@@ -46,10 +45,6 @@ class Home extends Component {
                         />                      
                     </div>
                     
-                    {/* <div className="container-tipo-cambio">                        
-                        <TipoCambio/>
-                    </div> */}
-
                     <p className="t1">Precio Venta :</p>                                            
                     <div className="display-value">
                         <strong>S/.{exchange_rate.precioVenta}</strong>                                                                        

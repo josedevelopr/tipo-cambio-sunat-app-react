@@ -26,7 +26,7 @@ const theme = createMuiTheme({
     },
   });
 
-export default function SeleccionarMesButton() {
+export default function SeleccionarMesButton(props) {
     const classes = useStyles();
     const [open, setOpen] = useState(false);
     const [selectedDate, handleDateChange] = useState(new Date());
@@ -41,24 +41,20 @@ export default function SeleccionarMesButton() {
               size="large"
             >
               Mes
-            </Button>
-            {/* <Fab 
-            size="large" 
-            color="primary"
-            aria-label="add"
-            className={classes.margin}         
-            onClick={() => setOpen(isOpen => !isOpen)}
-            >
-            <TodayIcon             
-                style={{color:'#fff'}}
-                />
-            </Fab>              */}
+            </Button>            
         </ThemeProvider>           
         <DatePicker 
           open={open} 
           style={{display:"none"}} 
-          onChange={handleDateChange} 
+          onChange={ d => {
+            props.onChangeMonth(d);
+            setOpen(isOpen => !isOpen);
+          }}
+          views={["year", "month"]}
+          value={props.date}
+          maxDate={new Date()} 
           onAccept={() => setOpen(isOpen => !isOpen)}
+          onClose={() => setOpen(isOpen => !isOpen)}
         />
       </MuiPickersUtilsProvider>        
     )

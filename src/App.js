@@ -7,8 +7,6 @@ import TipoCambioMensual from './components/TipoCambioMensual/TipoCambioMensual'
 import {Provider} from "react-redux";
 import store from "./store";
 import './App.css';
-import TipoCambio from './components/Home/TipoCambio';
-
 
 function App() {
   return (
