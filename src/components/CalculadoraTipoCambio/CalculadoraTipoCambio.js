@@ -12,6 +12,7 @@ import DragHandleIcon from '@material-ui/icons/DragHandle';
 import {connect} from 'react-redux';
 import PropTypes from 'prop-types';
 import {format} from 'date-fns';
+import { Alert, AlertTitle } from '@material-ui/lab';
 
 import { getCurrentExchangeRate,
          getExchangeRateByDate } from '../../actions/ExchangeRateActions';
@@ -24,12 +25,17 @@ class CalculadoraTipoCambio extends Component {
         this.state = 
         {
             date : new Date(),
-            nuevosSoles : 0.00,
-            dolares : 0.00
+            nuevosSoles : '',
+            dolares : '',
+            calculo : 'S',
+            errorAlertOpen : false
         };
 
-        this.onChangeDate   = this.onChangeDate.bind(this);
-        this.onChange       = this.onChange.bind(this);
+        this.onChangeDate           = this.onChangeDate.bind(this);
+        this.onChange               = this.onChange.bind(this);
+        this.onCalculate            = this.onCalculate.bind(this);        
+        this.onChangeCalculateType  = this.onChangeCalculateType.bind(this);        
+        this.clearState             = this.clearState.bind(this);                
     }
 
     componentDidMount()
@@ -48,11 +54,39 @@ class CalculadoraTipoCambio extends Component {
         this.setState({date:d});
         this.setState({titulo : 'Dolar al '+fecha});
         // console.log(d);
-        this.props.getExchangeRateByDate(d.getDate(), d.getMonth()+1, d.getFullYear());
+        this.props.getExchangeRateByDate(d.getDate(), d.getMonth()+1, d.getFullYear());        
+    }
+
+    onChangeCalculateType()
+    {
+        let changeType = this.state.calculo == 'S' ? 'D' : 'S';
+        this.setState({calculo : changeType});
+        this.clearState();
+    }
+
+    onCalculate(){
+        let calculateType = this.state.calculo;                
+        let {precioVenta} = this.props.exchangeRate.exchange_rate;
+        let resultado = 0;
+        switch(calculateType)
+        {            
+            case "D" :  
+                let nuevosSoles = this.state.nuevosSoles;                
+                resultado = nuevosSoles / precioVenta;
+                this.setState({dolares : resultado});              
+                break;
+            default :
+                let dolares = this.state.dolares;                
+                resultado = dolares * precioVenta;
+                this.setState({nuevosSoles : resultado});
+        }
+    }
+
+    clearState(){
+        this.setState({dolares : '', nuevosSoles : ''});         
     }
 
     render() {
-
         const {exchange_rate} = this.props.exchangeRate
         let fecha = format(this.state.date,'dd/MM/yyyy');        
 
@@ -80,23 +114,7 @@ class CalculadoraTipoCambio extends Component {
                         <h1><strong>Calcular</strong></h1> 
                     </div>                  
                     <FormControl fullWidth variant="outlined" className="item-calc">
-                        <InputLabel htmlFor="outlined-adornment-amount">Amount</InputLabel>
-                        <OutlinedInput
-                            id="outlined-adornment-amount"                                                        
-                            name="nuevosSoles"
-                            placeholder="0.00"
-                            onChange={this.onChange}
-                            startAdornment={<InputAdornment position="start">S/.</InputAdornment>}
-                            labelWidth={60}
-                        />
-                    </FormControl>
-                    
-                    <Fab color="primary" className="btnCenter">
-                        <ArrowDownwardIcon />
-                    </Fab>
-                    
-                    <FormControl fullWidth variant="outlined" className="item-calc">
-                        <InputLabel htmlFor="outlined-adornment-amount">Amount</InputLabel>
+                    <InputLabel htmlFor="outlined-adornment-amount">Dólares</InputLabel>
                         <OutlinedInput
                             id="outlined-adornment-amount"                            
                             // onChange={handleChange('amount')}
@@ -105,12 +123,40 @@ class CalculadoraTipoCambio extends Component {
                             name="dolares"
                             placeholder="0.00"
                             onChange={this.onChange}
+                            type="number"
+                            value={this.state.dolares}
+                            disabled={this.state.calculo == 'D' ? true : false}
+                        />                        
+                    </FormControl>
+                    
+                    <Fab 
+                        color="primary" 
+                        className="btnCenter"
+                        onClick={this.onChangeCalculateType}
+                        style={this.state.calculo == 'S' ? {transform: "scaleY(1)"} : {transform: "scaleY(-1)"}}
+                    >
+                        <ArrowDownwardIcon />
+                    </Fab>
+                    
+                    <FormControl fullWidth variant="outlined" className="item-calc">
+                        <InputLabel htmlFor="outlined-adornment-amount">Nuevos Soles</InputLabel>
+                        <OutlinedInput
+                            id="outlined-adornment-amount"                                                        
+                            name="nuevosSoles"
+                            placeholder="0.00"
+                            onChange={this.onChange}
+                            startAdornment={<InputAdornment position="start">S/.</InputAdornment>}
+                            labelWidth={60}
+                            type="number"
+                            value={this.state.nuevosSoles}
+                            disabled={this.state.calculo == 'S' ? true : false}
                         />
                     </FormControl>
-                </div>                          
-                <div className="btnCalculate">
+                </div>                      
+                                       
+                <div className="btnCalculate" onClick={this.onCalculate}>
                     <DragHandleIcon style={{fill: "white"}}/>
-                </div>      
+                </div>  
             </CalculadoraTipoCambioContainer>
         )
     }
