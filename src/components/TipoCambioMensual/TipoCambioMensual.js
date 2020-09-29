@@ -3,6 +3,9 @@ import styled from 'styled-components';
 import {generateMedia} from 'styled-media-query';
 import {connect} from 'react-redux';
 import PropTypes from 'prop-types';
+import IconButton from '@material-ui/core/IconButton';
+import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
+import {Link} from "react-router-dom";
 
 import SeleccionarMesButton from './SeleccionarMesButton';
 import TipoCambioTable from './TipoCambioTable';
@@ -40,7 +43,7 @@ class TipoCambioMensual extends Component {
                                   "Octubre","Noviembre","Diciembre"];
 
         return (
-            <TipoCambioMensualContainer>
+            <TipoCambioMensualContainer>                
                 <div className="title">
                     <h1><strong>Tipo Cambio Mensual</strong></h1> 
                 </div>
@@ -59,7 +62,16 @@ class TipoCambioMensual extends Component {
                      exchangeRatelst = {exchange_rates}
                     />
                 </div>
-                
+                <IconButton 
+                    aria-label="upload picture" 
+                    component="span"
+                    component={Link}
+                    to="/"
+                >                    
+                    < ArrowBackIosIcon style={{fill:"#fff"}}/>
+                    <p style={{color:"#fff", paddingLeft:"5px"}}>Regresar</p>
+                    
+                </IconButton >
             </TipoCambioMensualContainer>            
         )
     }
@@ -116,5 +128,6 @@ const TipoCambioMensualContainer = styled.div`
         margin-top: 35px;
         width: 95%;
         align-self: center;
+        padding-bottom : 35px;
     }
 `;

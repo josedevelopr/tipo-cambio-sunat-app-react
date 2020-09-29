@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import {generateMedia} from 'styled-media-query';
 import {connect} from 'react-redux';
 import PropTypes from 'prop-types';
+import {format} from 'date-fns';
 
 import CalendarButton from './CalendarButton';
 import MenuActions from './MenuActions';
@@ -12,32 +13,38 @@ class Home extends Component {
 
     constructor(props)
     {   super();
-        this.state = {
-            date : new Date()
+        this.state = 
+        {
+            date : new Date(),
+            titulo : 'Dolar Hoy'
         };
 
         this.onChangeDate = this.onChangeDate.bind(this);
     }
 
-    componentDidMount(){        
+    componentDidMount()
+    {        
         this.props.getCurrentExchangeRate();
     }
 
-    onChangeDate(d){
+    onChangeDate(d)
+    {
+        let fecha = format(d,'dd/MM/yyyy');
         this.setState({date:d});
+        this.setState({titulo : 'Dolar al '+fecha});
         // console.log(d);
         this.props.getExchangeRateByDate(d.getDate(), d.getMonth()+1, d.getFullYear());
     }
 
-    render() {
-
+    render() 
+    {
         const {exchange_rate} = this.props.exchangeRate
 
         return (
             <HomeContainer>
                 <div className="display-section">
                     <div className="title">
-                        <h1>Dolar Hoy </h1>                          
+                        <h1>{this.state.titulo}</h1>                          
                         <CalendarButton 
                          className="btnCalendar"
                          date={this.state.date}
@@ -111,7 +118,7 @@ const HomeContainer = styled.div`
     }
 
     .title h1{
-        margin-bottom: 15px;
+        margin-bottom: 8px;
     }
 
     .t1{
