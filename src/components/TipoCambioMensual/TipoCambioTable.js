@@ -8,6 +8,7 @@ import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TablePagination from '@material-ui/core/TablePagination';
 import TableRow from '@material-ui/core/TableRow';
+import {format} from 'date-fns';
 
 const columns = [
   { id: 'dia', label: 'Día', minWidth: 20 },  
@@ -34,13 +35,27 @@ const columns = [
   },
 ];
 
+function formatTheDateYall (date) 
+{
+  const [ year, month, day ] = date.substr(0, 10).split('-')
+  return format(new Date(
+          year,
+          (month - 1),
+          day,
+  ), 'yyyy/MM/dd')
+}
+
 function createData(exchangeRate) 
 {
-  let dia         = new Date(exchangeRate.fecha).getDate(),
+  //let fechac      = format(new Date(exchangeRate.fecha).toISOString(), 'yyyy-MM-dd');//dateFns.parse(exchangeRate.fecha);// new Date(exchangeRate.fecha).toISOString();
+  let fechac      = formatTheDateYall(exchangeRate.fecha);
+  let dia         = new Date(fechac).getDate(),
       tcCompra    = exchangeRate.precioCompra.toFixed(4),
       tcVenta     = exchangeRate.precioVenta.toFixed(4),
       tcPromedio  = exchangeRate.precioPromedio.toFixed(4);
 
+  
+  console.log(fechac);
   return { dia, tcCompra, tcVenta, tcPromedio };
 }
 
