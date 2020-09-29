@@ -59,10 +59,7 @@ class Home extends Component {
                     <p className="t1">Precio Compra :</p>                                            
                     <div className="display-value">
                         <strong>S/.{exchange_rate.precioCompra}</strong>                                                                        
-                    </div>                   
-                    {/* <div className="currency">
-                        <p>nuevos soles</p>
-                    </div> */}
+                    </div>  
                     <div className="action-buttons">
                         <MenuActions/>
                     </div>

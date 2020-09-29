@@ -9,11 +9,53 @@ import InputAdornment from '@material-ui/core/InputAdornment';
 import Fab from '@material-ui/core/Fab';
 import ArrowDownwardIcon from '@material-ui/icons/ArrowDownward';
 import DragHandleIcon from '@material-ui/icons/DragHandle';
+import {connect} from 'react-redux';
+import PropTypes from 'prop-types';
+import {format} from 'date-fns';
 
+import { getCurrentExchangeRate,
+         getExchangeRateByDate } from '../../actions/ExchangeRateActions';
 import CalendarButton from '../Home/CalendarButton';
 
 class CalculadoraTipoCambio extends Component {
+
+    constructor(props)
+    {   super();
+        this.state = 
+        {
+            date : new Date(),
+            nuevosSoles : 0.00,
+            dolares : 0.00
+        };
+
+        this.onChangeDate   = this.onChangeDate.bind(this);
+        this.onChange       = this.onChange.bind(this);
+    }
+
+    componentDidMount()
+    {        
+        this.props.getCurrentExchangeRate();
+    }
+
+    onChange(e)
+    {
+        this.setState({[e.target.name] : e.target.value})
+    }
+
+    onChangeDate(d)
+    {
+        let fecha = format(d,'dd/MM/yyyy');
+        this.setState({date:d});
+        this.setState({titulo : 'Dolar al '+fecha});
+        // console.log(d);
+        this.props.getExchangeRateByDate(d.getDate(), d.getMonth()+1, d.getFullYear());
+    }
+
     render() {
+
+        const {exchange_rate} = this.props.exchangeRate
+        let fecha = format(this.state.date,'dd/MM/yyyy');        
+
         return (
             <CalculadoraTipoCambioContainer>
                 <div className="currency">
@@ -21,12 +63,16 @@ class CalculadoraTipoCambio extends Component {
                         <h1><strong>Tipo Cambio</strong></h1> 
                     </div>
                     <div className="currency-exchange">
-                        <p>Fecha : 02/05/2020</p>
+                        <p>Fecha : {fecha}</p>
                         <br/>
-                        <p>S/ : 3.212</p>                                                
+                        <p>S/ : {exchange_rate.precioVenta}</p>                                                
                     </div>
                     <div className="button-section">
-                        <CalendarButton/>
+                        <CalendarButton 
+                         className="btnCalendar"
+                         date={this.state.date}
+                         onChangeDate={this.onChangeDate}
+                        />
                     </div>
                 </div>
                 <div className="calculate-section">  
@@ -36,8 +82,10 @@ class CalculadoraTipoCambio extends Component {
                     <FormControl fullWidth variant="outlined" className="item-calc">
                         <InputLabel htmlFor="outlined-adornment-amount">Amount</InputLabel>
                         <OutlinedInput
-                            id="outlined-adornment-amount"                            
-                            // onChange={handleChange('amount')}
+                            id="outlined-adornment-amount"                                                        
+                            name="nuevosSoles"
+                            placeholder="0.00"
+                            onChange={this.onChange}
                             startAdornment={<InputAdornment position="start">S/.</InputAdornment>}
                             labelWidth={60}
                         />
@@ -54,6 +102,9 @@ class CalculadoraTipoCambio extends Component {
                             // onChange={handleChange('amount')}
                             startAdornment={<InputAdornment position="start">$</InputAdornment>}
                             labelWidth={60}
+                            name="dolares"
+                            placeholder="0.00"
+                            onChange={this.onChange}
                         />
                     </FormControl>
                 </div>                          
@@ -65,7 +116,17 @@ class CalculadoraTipoCambio extends Component {
     }
 }
 
-export default CalculadoraTipoCambio;
+CalculadoraTipoCambio.propTypes = {
+    getCurrentExchangeRate : PropTypes.func.isRequired,
+    getExchangeRateByDate : PropTypes.func.isRequired,    
+    exchangeRate : PropTypes.object.isRequired
+}
+
+const mapStateToProps = state => ({
+    exchangeRate : state.exchangeRate
+})
+
+export default connect(mapStateToProps, {getCurrentExchangeRate,getExchangeRateByDate}) (CalculadoraTipoCambio);
 
 const CalculadoraTipoCambioContainer = styled.div`
     width : 100%;
