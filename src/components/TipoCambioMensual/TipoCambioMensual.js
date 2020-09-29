@@ -6,6 +6,7 @@ import PropTypes from 'prop-types';
 
 import SeleccionarMesButton from './SeleccionarMesButton';
 import TipoCambioTable from './TipoCambioTable';
+import {getExchangeRateByMonth} from '../../actions/ExchangeRateActions';
 
 class TipoCambioMensual extends Component {
 
@@ -18,12 +19,22 @@ class TipoCambioMensual extends Component {
         this.onChangeMonth = this.onChangeMonth.bind(this);
     }
 
-    onChangeMonth(date){
+    componentDidMount()
+    {
+        const currentDate = new Date();
+        this.props.getExchangeRateByMonth(currentDate.getMonth(), currentDate.getFullYear());
+    }
+
+    onChangeMonth(date)
+    {
         this.state({dateToConsult : date});
         console.log(date);        
     }
 
     render() {
+
+        const {exchange_rates} = this.props.exchangeRate;        
+
         return (
             <TipoCambioMensualContainer>
                 <div className="title">
@@ -40,7 +51,9 @@ class TipoCambioMensual extends Component {
                     />
                 </div>
                 <div className="tipoCambioTableSection">
-                    <TipoCambioTable/>
+                    <TipoCambioTable
+                     exchangeRatelst = {exchange_rates}
+                    />
                 </div>
                 
             </TipoCambioMensualContainer>            
@@ -48,7 +61,16 @@ class TipoCambioMensual extends Component {
     }
 }
 
-export default connect(null, null) (TipoCambioMensual);
+TipoCambioMensual.propTypes = {
+    getExchangeRateByMonth : PropTypes.func.isRequired,    
+    exchangeRate : PropTypes.object.isRequired
+}
+
+const mapStateToProps = state => ({
+    exchangeRate : state.exchangeRate
+})
+
+export default connect(mapStateToProps, {getExchangeRateByMonth}) (TipoCambioMensual);
 
 const TipoCambioMensualContainer = styled.div`
     width : 100%;

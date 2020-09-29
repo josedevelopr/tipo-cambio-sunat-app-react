@@ -34,31 +34,15 @@ const columns = [
   },
 ];
 
-function createData(dia, tcCompra, tcVenta, tcPromedio) {  
+function createData(exchangeRate) 
+{
+  let dia         = new Date(exchangeRate.fecha).getDate(),
+      tcCompra    = exchangeRate.precioCompra.toFixed(4),
+      tcVenta     = exchangeRate.precioVenta.toFixed(4),
+      tcPromedio  = exchangeRate.precioPromedio.toFixed(4);
+
   return { dia, tcCompra, tcVenta, tcPromedio };
 }
-
-const rows = [
-  createData('01', 2.563, 2.713, 2.52),
-  createData('02', 2.563, 2.713, 2.52),
-  createData('03', 2.563, 2.713, 2.52),
-  createData('04', 2.563, 2.713, 2.52),
-  createData('05', 2.563, 2.713, 2.52),
-  createData('06', 2.563, 2.713, 2.52),
-  createData('07', 2.563, 2.713, 2.52),
-  createData('08', 2.563, 2.713, 2.52),
-  createData('09', 2.563, 2.713, 2.52),
-  createData('10', 2.563, 2.713, 2.52),
-  createData('11', 2.563, 2.713, 2.52),
-  createData('12', 2.563, 2.713, 2.52),
-  createData('13', 2.563, 2.713, 2.52),
-  createData('14', 2.563, 2.713, 2.52),
-  createData('15', 2.563, 2.713, 2.52),
-  createData('16', 2.563, 2.713, 2.52),
-  createData('17', 2.563, 2.713, 2.52),
-  createData('18', 2.563, 2.713, 2.52),
-  createData('19', 2.563, 2.713, 2.52),
-];
 
 const useStyles = makeStyles({
   root: {
@@ -69,10 +53,13 @@ const useStyles = makeStyles({
   },
 });
 
-export default function TipoCambioTable() {
+export default function TipoCambioTable(props) {
   const classes = useStyles();
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
+
+  const rows = props.exchangeRatelst
+                    .map( er => createData(er));
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
@@ -121,7 +108,7 @@ export default function TipoCambioTable() {
       <TablePagination
         rowsPerPageOptions={[10, 25, 100]}
         component="div"
-        count={rows.length}
+        count={props.exchangeRatelst.length}
         rowsPerPage={rowsPerPage}
         page={page}
         onChangePage={handleChangePage}
