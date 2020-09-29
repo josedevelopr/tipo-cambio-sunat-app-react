@@ -11,8 +11,9 @@ export const getCurrentExchangeRate = () => async dispatch => {
         mes = consultDate.getMonth()+1, 
         anio = consultDate.getFullYear();    
 
-    try {        
-        let res = await axios.get(`http://localhost:8080/api/tipo-cambio/por-dia?anio=${anio}&dia=${dia}&mes=${mes}`);
+    try {                
+        //let res = await axios.get(`http://localhost:8080/api/tipo-cambio/por-dia?anio=${anio}&dia=${dia}&mes=${mes}`);
+        let res = await axios.get(`https://tipo-cambio-sunat-spring-app.herokuapp.com/api/tipo-cambio/por-dia?anio=${anio}&dia=${dia}&mes=${mes}`);
 
         dispatch({
             type : GET_CURRENT_EXCHANGE_RATE,
@@ -25,7 +26,8 @@ export const getCurrentExchangeRate = () => async dispatch => {
 
 export const getExchangeRateByDate = (dia, mes, anio) => async dispatch => {     
     try {        
-        let res = await axios.get(`http://localhost:8080/api/tipo-cambio/por-dia?anio=${anio}&dia=${dia}&mes=${mes}`);
+        // let res = await axios.get(`http://localhost:8080/api/tipo-cambio/por-dia?anio=${anio}&dia=${dia}&mes=${mes}`);
+        let res = await axios.get(`https://tipo-cambio-sunat-spring-app.herokuapp.com/api/tipo-cambio/por-dia?anio=${anio}&dia=${dia}&mes=${mes}`);
 
         dispatch({
             type : GET_EXCHANGE_RATE_BY_DATE,
@@ -38,7 +40,8 @@ export const getExchangeRateByDate = (dia, mes, anio) => async dispatch => {
 
 export const getExchangeRateByMonth = (mes, anio) => async dispatch => {     
     try {        
-        let res = await axios.get(`http://localhost:8080/api/tipo-cambio/por-mes?anio=${anio}&mes=${mes}`);
+        // let res = await axios.get(`http://localhost:8080/api/tipo-cambio/por-mes?anio=${anio}&mes=${mes}`);
+        let res = await axios.get(`https://tipo-cambio-sunat-spring-app.herokuapp.com/api/tipo-cambio/por-mes?anio=${anio}&mes=${mes}`);
 
         dispatch({
             type : GET_EXCHANGE_RATE_BY_MONTH,
