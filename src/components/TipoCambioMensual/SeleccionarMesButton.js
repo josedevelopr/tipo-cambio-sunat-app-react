@@ -38,6 +38,7 @@ export default function SeleccionarMesButton(props) {
               color="primary"
               onClick={() => setOpen(isOpen => !isOpen)}
               size="large"
+              fullWidth
             >
               Mes
             </Button>            

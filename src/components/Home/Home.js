@@ -81,6 +81,14 @@ const mapStateToProps = state => ({
 
 export default connect(mapStateToProps, {getCurrentExchangeRate,getExchangeRateByDate}) (Home);
 
+const customMedia = generateMedia({
+    mdDesktop : '1350px',    
+    smDesktop: '1000px',    
+    tablet: '740px',
+    mdtablet : '640px',
+    mdMobile : '500px',
+});
+
 const HomeContainer = styled.div`
     width : 100vw;
     height : 100vh;
@@ -103,6 +111,12 @@ const HomeContainer = styled.div`
         -webkit-box-shadow: 1px 20px 26px -1px rgba(0,0,0,0.51);
         -moz-box-shadow: 1px 20px 26px -1px rgba(0,0,0,0.51);
         box-shadow: 1px 20px 26px -1px rgba(0,0,0,0.51);
+        ${customMedia.greaterThan('mdMobile')`
+            width:60vh;
+        `}
+        ${customMedia.greaterThan('smDesktop')`
+            width:55vh;
+        `}
     }
 
     .title{
@@ -115,13 +129,21 @@ const HomeContainer = styled.div`
     }
 
     .title h1{
-        margin-bottom: 8px;
+        font-size: 30px;
+        padding-bottom: 10px;
+        ${customMedia.greaterThan('mdMobile')`
+            font-size: 25px;
+        `}
     }
 
     .t1{
         text-align: center;
         color: #fff;
         padding-top:40px;
+        font-size: 30px;
+        ${customMedia.greaterThan('mdMobile')`
+            font-size: 20px;
+        `}
     }
 
     .display-value{

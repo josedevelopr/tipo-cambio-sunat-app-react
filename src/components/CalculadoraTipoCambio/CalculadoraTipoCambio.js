@@ -13,6 +13,9 @@ import {connect} from 'react-redux';
 import PropTypes from 'prop-types';
 import {format} from 'date-fns';
 import { Alert, AlertTitle } from '@material-ui/lab';
+import IconButton from '@material-ui/core/IconButton';
+import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
+import {Link} from "react-router-dom";
 
 import { getCurrentExchangeRate,
          getExchangeRateByDate } from '../../actions/ExchangeRateActions';
@@ -189,6 +192,16 @@ class CalculadoraTipoCambio extends Component {
                 <div className="btnCalculate" onClick={this.onCalculate}>
                     <DragHandleIcon style={{fill: "white"}}/>
                 </div>  
+                <IconButton                     
+                    component="span"
+                    component={Link}
+                    to="/"
+                    style={{height:"40px"}}
+                >                    
+                    < ArrowBackIosIcon style={{fill:"#fff"}}/>
+                    <p style={{color:"#fff", paddingLeft:"5px", fontSize:"15px"}}>Regresar</p>
+                    
+                </IconButton >               
             </CalculadoraTipoCambioContainer>
         )
     }
@@ -208,7 +221,8 @@ export default connect(mapStateToProps, {getCurrentExchangeRate,getExchangeRateB
 
 const CalculadoraTipoCambioContainer = styled.div`
     width : 100%;
-    height : 100%;
+    height-min: 100%;
+    height: 100%;
     background-color : var(--main-background);    
     padding-top: 5%;    
     display: flex;
@@ -266,7 +280,7 @@ const CalculadoraTipoCambioContainer = styled.div`
     .calculate-section{
         box-sizing: border-box; 
         width : 90%;
-        height : auto;
+        height : 500px;
         border-radius: 9px; 
         background-color : var(--secondary-background); 
         -webkit-box-shadow: 1px 20px 26px -1px rgba(0,0,0,0.51);
