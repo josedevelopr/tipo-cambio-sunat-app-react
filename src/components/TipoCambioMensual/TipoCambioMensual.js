@@ -121,6 +121,7 @@ const TipoCambioMensualContainer = styled.div`
     padding-top: 10%;
     display: flex;
     flex-direction: column;   
+    box-sizing: boder-box;
     //padding-bottom: 10%;        
     ${customMedia.greaterThan('smDesktop')`
         padding-top: 3%;

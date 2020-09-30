@@ -14,6 +14,7 @@ import PropTypes from 'prop-types';
 import {format} from 'date-fns';
 import { Alert, AlertTitle } from '@material-ui/lab';
 import IconButton from '@material-ui/core/IconButton';
+import Button from '@material-ui/core/Button';
 import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
 import {Link} from "react-router-dom";
 
@@ -115,67 +116,72 @@ class CalculadoraTipoCambio extends Component {
         
         return (
             <CalculadoraTipoCambioContainer>
-                <div className="currency">
-                    <div className="title">
-                        <h1><strong>Tipo Cambio</strong></h1> 
+                <div className="container">
+                    <div className="currency">
+                        <div className="title">
+                            <h1><strong>Tipo Cambio</strong></h1> 
+                        </div>
+                        <div className="currency-exchange">
+                            <p>Fecha : {fecha}</p>
+                            <br/>
+                            <p>S/ : {exchange_rate.precioVenta}</p>                                                
+                        </div>
+                        <div className="button-section">
+                            <CalendarButton 
+                            className="btnCalendar"
+                            date={this.state.date}
+                            onChangeDate={this.onChangeDate}
+                            />
+                        </div>
                     </div>
-                    <div className="currency-exchange">
-                        <p>Fecha : {fecha}</p>
-                        <br/>
-                        <p>S/ : {exchange_rate.precioVenta}</p>                                                
-                    </div>
-                    <div className="button-section">
-                        <CalendarButton 
-                         className="btnCalendar"
-                         date={this.state.date}
-                         onChangeDate={this.onChangeDate}
-                        />
-                    </div>
-                </div>
-                <div className="calculate-section">  
-                    <div className="title">
-                        <h1><strong>Calcular</strong></h1> 
-                    </div>                  
-                    <FormControl fullWidth variant="outlined" className="item-calc">
-                    <InputLabel htmlFor="outlined-adornment-amount">Dólares</InputLabel>
-                        <OutlinedInput
-                            id="outlined-adornment-amount"                            
-                            // onChange={handleChange('amount')}
-                            startAdornment={<InputAdornment position="start">$</InputAdornment>}
-                            labelWidth={60}
-                            name="dolares"
-                            placeholder="0.00"
-                            onChange={this.onChange}
-                            type="number"
-                            value={this.state.dolares}
-                            disabled={this.state.calculo == 'D' ? true : false}
-                        />                        
-                    </FormControl>
-                    
-                    <Fab 
-                        color="primary" 
-                        className="btnCenter"
-                        onClick={this.onChangeCalculateType}
-                        style={this.state.calculo == 'S' ? {transform: "scaleY(1)"} : {transform: "scaleY(-1)"}}
-                    >
-                        <ArrowDownwardIcon />
-                    </Fab>
-                    
-                    <FormControl fullWidth variant="outlined" className="item-calc">
-                        <InputLabel htmlFor="outlined-adornment-amount">Nuevos Soles</InputLabel>
-                        <OutlinedInput
-                            id="outlined-adornment-amount"                                                        
-                            name="nuevosSoles"
-                            placeholder="0.00"
-                            onChange={this.onChange}
-                            startAdornment={<InputAdornment position="start">S/.</InputAdornment>}
-                            labelWidth={60}
-                            type="number"
-                            value={this.state.nuevosSoles}
-                            disabled={this.state.calculo == 'S' ? true : false}
-                        />
-                    </FormControl>
-                </div>  
+                    <div className="calculate-section">  
+                        <div className="title">
+                            <h1><strong>Calcular</strong></h1> 
+                        </div>                  
+                        <FormControl fullWidth variant="outlined" className="item-calc">
+                        <InputLabel htmlFor="outlined-adornment-amount">Dólares</InputLabel>
+                            <OutlinedInput
+                                id="outlined-adornment-amount"                            
+                                // onChange={handleChange('amount')}
+                                startAdornment={<InputAdornment position="start">$</InputAdornment>}
+                                labelWidth={60}
+                                name="dolares"
+                                placeholder="0.00"
+                                onChange={this.onChange}
+                                type="number"
+                                value={this.state.dolares}
+                                disabled={this.state.calculo == 'D' ? true : false}
+                            />                        
+                        </FormControl>
+                        
+                        <Fab 
+                            color="primary" 
+                            className="btnCenter"
+                            onClick={this.onChangeCalculateType}
+                            style={this.state.calculo == 'S' ? {transform: "scaleY(1)"} : {transform: "scaleY(-1)"}}
+                        >
+                            <ArrowDownwardIcon />
+                        </Fab>
+                        
+                        <FormControl fullWidth variant="outlined" className="item-calc">
+                            <InputLabel htmlFor="outlined-adornment-amount">Nuevos Soles</InputLabel>
+                            <OutlinedInput
+                                id="outlined-adornment-amount"                                                        
+                                name="nuevosSoles"
+                                placeholder="0.00"
+                                onChange={this.onChange}
+                                startAdornment={<InputAdornment position="start">S/.</InputAdornment>}
+                                labelWidth={60}
+                                type="number"
+                                value={this.state.nuevosSoles}
+                                disabled={this.state.calculo == 'S' ? true : false}
+                            />
+                        </FormControl>
+                        <div className="btnCalculate" onClick={this.onCalculate}>
+                            <DragHandleIcon style={{fill: "white"}}/>
+                        </div>
+                    </div> 
+                </div>                 
                 {
                     this.state.errores != '' &&
                     (
@@ -189,19 +195,18 @@ class CalculadoraTipoCambio extends Component {
                         </React.Fragment>                    
                     )
                 }             
-                <div className="btnCalculate" onClick={this.onCalculate}>
-                    <DragHandleIcon style={{fill: "white"}}/>
-                </div>  
-                <IconButton                     
+                  
+                <Button                     
                     component="span"
                     component={Link}
                     to="/"
                     style={{height:"40px"}}
+                    className="btnRegresar"
                 >                    
                     < ArrowBackIosIcon style={{fill:"#fff"}}/>
                     <p style={{color:"#fff", paddingLeft:"5px", fontSize:"15px"}}>Regresar</p>
                     
-                </IconButton >               
+                </Button >               
             </CalculadoraTipoCambioContainer>
         )
     }
@@ -219,30 +224,63 @@ const mapStateToProps = state => ({
 
 export default connect(mapStateToProps, {getCurrentExchangeRate,getExchangeRateByDate}) (CalculadoraTipoCambio);
 
+const customMedia = generateMedia({
+    mdDesktop : '1350px',    
+    smDesktop: '1000px',    
+    tablet: '740px',
+    mdtablet : '640px',
+    mdMobile : '500px',
+});
+
 const CalculadoraTipoCambioContainer = styled.div`
     width : 100%;
-    height-min: 100%;
+    min-height:100vh;
     height: 100%;
     background-color : var(--main-background);    
     padding-top: 5%;    
     display: flex;
     flex-direction: column;
     //padding-bottom: 10%;  
+    ${customMedia.greaterThan('tablet')`                
+       padding-top: 5%;
+       box-sizing: border-box;
+    `} 
+    .container{        
+        height:auto;
+        width: 100%;        
+    ${customMedia.greaterThan('tablet')`                
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        //background-color : pink;
+    `} 
+    }
     .currency{
+        padding-bottom: 2rem;
         box-sizing: border-box; 
         width : 90%;
-        height : 350px;
+        height : auto;
         border-radius: 9px; 
         background-color : var(--secondary-background); 
         -webkit-box-shadow: 1px 20px 26px -1px rgba(0,0,0,0.51);
         -moz-box-shadow: 1px 20px 26px -1px rgba(0,0,0,0.51);
         box-shadow: 1px 20px 26px -1px rgba(0,0,0,0.51); 
-        margin: 0 auto;    
+        margin: 0 auto;
+        ${customMedia.greaterThan('mdMobile')`
+            width : 65%;
+        `} 
+        ${customMedia.greaterThan('tablet')`
+            width : 45%;
+            padding-bottom: 1rem;
+        `}    
+        ${customMedia.greaterThan('smDesktop')`                
+            width : 30%;
+        `} 
     }
 
     .title{
         width : 100%;
-        height : 40%;
+        height : auto;
         //background-color : pink;
         padding: 25px;
         box-sizing: border-box;        
@@ -253,6 +291,10 @@ const CalculadoraTipoCambioContainer = styled.div`
         border-bottom: 2px solid #fff;        
         padding-bottom: 10px;
         width: 80px;
+        ${customMedia.greaterThan('tablet')`
+            font-size: 1.5rem;    
+            width: auto;
+        `}
     }
 
     .currency-exchange{
@@ -260,7 +302,10 @@ const CalculadoraTipoCambioContainer = styled.div`
         height: 35%;
         padding: 25px;
         box-sizing: border-box;
-        //background-color : red;   
+        //background-color : red;  
+        ${customMedia.greaterThan('tablet')`
+            padding: 0 25px;
+        `}   
     }
     .currency-exchange p{
         color: #fff;
@@ -280,7 +325,7 @@ const CalculadoraTipoCambioContainer = styled.div`
     .calculate-section{
         box-sizing: border-box; 
         width : 90%;
-        height : 500px;
+        height : auto;
         border-radius: 9px; 
         background-color : var(--secondary-background); 
         -webkit-box-shadow: 1px 20px 26px -1px rgba(0,0,0,0.51);
@@ -289,28 +334,44 @@ const CalculadoraTipoCambioContainer = styled.div`
         margin: 0 auto;
         margin-top: 10%;        
         display: flex;
-        flex-direction: column;      
-        padding-bottom: 15%;  
+        flex-direction: column;              
+        ${customMedia.greaterThan('mdMobile')`
+            width : 65%;             
+        `}
+        ${customMedia.greaterThan('tablet')`
+            width : 45%;
+            margin-top: 0;       
+        `}
+        ${customMedia.greaterThan('smDesktop')`                
+            width : 30%;
+        `}  
     }
 
     .item-calc{     
         align-self: center;
-        margin-top: 2rem;
         width: 90%;
+        padding-top: 1rem;
     }
     
     .btnCenter{
-        margin-top: 1rem;
         align-self: center;
+        margin: 5rem 0;  
+        ${customMedia.greaterThan('tablet')`
+            margin:  2rem 0;  
+        `}      
     }
 
     .btnCalculate{
         width: 100%;
-        height: 70px;
+        height: 55px;
         background-color: #f50057;
         display: flex;
         align-items: center;
         justify-content: center;   
-        margin-top:10%;
+        margin-top:20%;
+        border-radius: 0 0 9px 9px; 
+    }
+    .btnRegresar{
+        padding: 50px 0;
     }
 `;
